@@ -2,7 +2,7 @@ import { MdOutlineStarHalf, MdStarOutline, MdStar } from 'react-icons/md'
 
 const Rating = (props) => {
 
-    const { rating } = props;
+    const { rating, catpion, numReviews } = props;
     return (
         <>
             <span>
@@ -40,6 +40,7 @@ const Rating = (props) => {
                     <MdStarOutline />
                 }
             </span>
+            {/* {catpion ? <span>{catpion}</span> : <span>{' ' + numReviews + ' rewiews' }</span>} */}
         </>
   )
 }

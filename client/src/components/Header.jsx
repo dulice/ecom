@@ -1,8 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Container, Navbar, Nav, Button, NavDropdown } from 'react-bootstrap'
 import { BsCart3 } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import { Store } from '../context/Store'
+import AdminRoute from './AdminRoute'
+import Searchbox from './Searchbox'
+import SideBar from './SideBar'
 
 const Header = () => {
   const { state, dispatch } = useContext(Store);
@@ -19,9 +22,11 @@ const Header = () => {
     <div>
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">
+                <SideBar />
+                <Navbar.Brand href="#home" className='mx-3'>
                   Amazon
                 </Navbar.Brand>
+                <Searchbox />
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                   <div className="d-flex w-100 justify-content-end">
@@ -37,6 +42,17 @@ const Header = () => {
                       :
                         <Link to='/signin' className='link text-white mx-5'>Sign In</Link>
                       }
+
+                      { userInfo && userInfo.isAdmin ?
+                      <NavDropdown title="Admin" id="basic-nav-dropdown">
+                        <Link className='link d-block ps-3 pb-3' to="/admin/dashboard">Dashboard</Link>
+                        <Link className='link d-block ps-3 pb-3' to="/admin/ordersList">Orders</Link>
+                        <Link className='link d-block ps-3 pb-3' to="/admin/productsList">Products</Link>
+                        <NavDropdown.Divider />
+                        <Link className='link ps-3' to="/admin/usersList">Users</Link>
+                      </NavDropdown>
+                      : null }
+
                       <Link className="m-3" to="/cart">
                         <Button variant='primary' className="position-relative">
                           <BsCart3 /> 

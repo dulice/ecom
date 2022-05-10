@@ -8,15 +8,22 @@ const address = JSON.parse(localStorage.getItem('shippingAddress'));
 const payMethod = JSON.parse(localStorage.getItem('paymentMethod'))
 
 const initialState = {
+  fullBox: false,
   userInfo: user ? user : null,
   cart: {
-    shippingAddress: address ? address : {},
+    shippingAddress: address ? address : { location: {}},
     paymentMethod: payMethod ? payMethod : '',
     cartItems: inCart ? inCart : [],
   },
 };
 function reducer(state, action) {
   switch (action.type) {
+    case 'SET_FULLBOX_ON':
+      return { ...state, fullBox: true};
+
+    case 'SET_FULLBOX-OFF':
+      return { ...state, fullBox: false};
+
     case 'CART_ADD_ITEM':
       // add to cart
       const newItem = action.payload;
@@ -69,6 +76,19 @@ function reducer(state, action) {
           shippingAddress: action.payload
         }
       }
+
+  case 'SAVE_SHIPPING_ADDRESS_MAP_LOCATION': 
+    return {
+      ...state,
+      cart: {
+        ...state,
+        shippingAddress: {
+          ...state.cart.shippingAddress,
+          location: action.payload
+        }
+
+      }
+    }
 
   case 'PAYMENT_METHOD_SAVE':
     return {
